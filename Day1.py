@@ -29,6 +29,6 @@ for i in range(len(left)):
     for j in range(len(right)):
         if (int(right[j]) == int(left[i])):
             count += 1
-    sum += count
+    sum += (count * int(left[i]))
 
 print(sum)
