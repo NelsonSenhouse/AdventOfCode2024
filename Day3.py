@@ -11,16 +11,14 @@ why(872,627)when() @who()&why()mul(585,812)-+#%(%)mul(774,83)where()<mul(895,861
 # input = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 regex = "mul\\([0-9]{1,3},[0-9]{1,3}\\)"
 matches = re.findall(regex, input)
-regex2 = "[1-9]{1,3},[1-9]{1,3}"
+regex2 = "[0-9]{1,3},[0-9]{1,3}"
 sum = 0
 print(matches)
 
 for i in range(len(matches)):
-    print(str(re.findall(regex2, matches[i])).split("'"))
     nums = str(re.findall(regex2, matches[i])).split("'")[1]
     num1 = nums.split(",")[0]
     num2 = nums.split(",")[1]
-    print(num1 + ", " + num2)
     product = int(num1) * int(num2)
     sum += product
 
