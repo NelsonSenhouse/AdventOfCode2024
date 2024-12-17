@@ -11,7 +11,7 @@ def partOne(list, r, c, r2, c2):
     cDiff = c - c2
     print(str(r + rDiff) + ", " + str(c + cDiff))
     print(str(r - 2 * rDiff) + ", " + str(c - 2 * cDiff))
-    if (r + rDiff >= 0 and c + cDiff < len(list[r]) and c + cDiff >= 0):
+    if (r + rDiff >= 0 and (c + cDiff < len(list[r]) and c + cDiff >= 0)):
         sum += 1
     if (r - rDiff * 2 < len(list) and c - 2 * cDiff < len(list[r]) and c - 2 * cDiff >= 0):
         sum += 1
@@ -34,12 +34,15 @@ checked = []
 total = 0
 for i in range(len(map)):
     for j in range(len(map[i])):
-        if (map[i][j] != "." and not map[i][j] in checked):
+        if (map[i][j] != "."):
             for k in range(len(map)):
-                for l in range(len(map[i])):
-                    if (map[i][j] == map[k][l] and (i != k or j != l)):
-                        total += partOne(map, i, j, k, l)
-                        # print(partOne(map, i, j, k, l))
-        checked.append(map[i][j])
+                if (k > i):
+                    for l in range(len(map[i])):
+                        if (map[i][j] == map[k][l] and (i != k or j != l)):
+                            # print("Row " + str(k) + ":")
+                            total += partOne(map, i, j, k, l)
+
+                            # print(partOne(map, i, j, k, l))
+        # checked.append(map[i][j])
 
 print(total)
