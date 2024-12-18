@@ -6,17 +6,27 @@ def get_file_data(file_name):
     return data
 
 def partOne(list, r, c, r2, c2):
-    sum = 0
+    antinodes = []
     rDiff = r - r2
     cDiff = c - c2
-    print(str(r + rDiff) + ", " + str(c + cDiff))
-    print(str(r - 2 * rDiff) + ", " + str(c - 2 * cDiff))
     if (r + rDiff >= 0 and (c + cDiff < len(list[r]) and c + cDiff >= 0)):
-        sum += 1
-    if (r - rDiff * 2 < len(list) and c - 2 * cDiff < len(list[r]) and c - 2 * cDiff >= 0):
-        sum += 1
-    print(sum)
-    return sum
+        antinodes.append((r + rDiff, c + cDiff))
+    if (r - 2 * rDiff < len(list) and c - 2 * cDiff < len(list[r]) and c - 2 * cDiff >= 0):
+        antinodes.append((r - 2 * rDiff, c - 2 * cDiff))
+    return antinodes
+
+def partTwo(list, r, c, r2, c2):
+    antinodes = []
+    rDiff = r - r2
+    cDiff = c - c2
+    for i in range(len(list)):
+        if (i > 0):
+            if (r + i * rDiff >= 0 and (c + i * cDiff < len(list[r]) and c + i * cDiff >= 0)):
+                antinodes.append((r + i * rDiff, c + i * cDiff))
+        if (i > 1):
+            if (r - i * rDiff < len(list) and c - i * cDiff < len(list[r]) and c - i * cDiff >= 0):
+                antinodes.append((r - i * rDiff, c - i * cDiff))
+    return antinodes
 
 file_data = get_file_data("Input")
 
@@ -30,6 +40,28 @@ for line in file_data:
 for row in map:
     print(row)
 
+print(partTwo(map, 9, 9, 8, 8))
+
+# part one
+checked = []
+nodes = 0
+for i in range(len(map)):
+    for j in range(len(map[i])):
+        if (map[i][j] != "."):
+            for k in range(len(map)):
+                if (k > i):
+                    for l in range(len(map[i])):
+                        if (map[i][j] == map[k][l] and (i != k or j != l)):
+                            list = partOne(map, i, j, k ,l)
+                            if (len(list) > 0):
+                                for tuple in list:
+                                    if not (tuple in checked):
+                                        checked.append(tuple)
+
+print(len(checked))
+
+
+# part two
 checked = []
 total = 0
 for i in range(len(map)):
@@ -39,10 +71,9 @@ for i in range(len(map)):
                 if (k > i):
                     for l in range(len(map[i])):
                         if (map[i][j] == map[k][l] and (i != k or j != l)):
-                            # print("Row " + str(k) + ":")
-                            total += partOne(map, i, j, k, l)
-
-                            # print(partOne(map, i, j, k, l))
-        # checked.append(map[i][j])
-
-print(total)
+                            list = partTwo(map, i, j, k, l)
+                            if (len(list) > 0):
+                                for tuple in list:
+                                    if not (tuple in checked):
+                                        checked.append(tuple)
+print(len(checked))
