@@ -40,11 +40,10 @@ for line in file_data:
 for row in map:
     print(row)
 
-print(partTwo(map, 9, 9, 8, 8))
+# print(partTwo(map, 9, 9, 8, 8))
 
 # part one
 checked = []
-nodes = 0
 for i in range(len(map)):
     for j in range(len(map[i])):
         if (map[i][j] != "."):
@@ -62,6 +61,23 @@ print(len(checked))
 
 
 # part two
+nodes = 0
+checked = []
+total = 0
+for i in range(len(map)):
+    for j in range(len(map[i])):
+        if (map[i][j] != "."):
+            sum = 0
+            for k in range(len(map)):
+                for l in range(len(map[i])):
+                    if (map[i][j] == map[k][l] and not (map[k][l] in checked)):
+                        sum += 1
+            if (sum > 1):
+                nodes += sum
+                # print(sum)
+        checked.append(map[i][j])
+# print(nodes)
+
 checked = []
 total = 0
 for i in range(len(map)):
